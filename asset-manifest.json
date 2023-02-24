@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/liinabakhoff/filmide-andmebaas/static/css/main.073c9b0a.css",
+    "main.js": "/liinabakhoff/filmide-andmebaas/static/js/main.bd328ed1.js",
+    "index.html": "/liinabakhoff/filmide-andmebaas/index.html",
+    "main.073c9b0a.css.map": "/liinabakhoff/filmide-andmebaas/static/css/main.073c9b0a.css.map",
+    "main.bd328ed1.js.map": "/liinabakhoff/filmide-andmebaas/static/js/main.bd328ed1.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.bd328ed1.js"
+  ]
+}
