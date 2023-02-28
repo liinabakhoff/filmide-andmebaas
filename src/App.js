@@ -1,52 +1,63 @@
 import './App.css'
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import MoviesList from './MoviesList';
 
-// Kas on üldse vaja onChange? Äkki piisab let muutujast, mis võetakse input-ist enteri/nupu vajutusel
-// setSearch('test'); console.log(search) ei ole 'test'
-// Miks värskendab MoviesList komponenti iga onChange peale?
-// "Your search results for:"
-// Inputi valideerimine
-
-
 function App() {
-  const [search, setSearch] = useState('')
-  const [searchValue, setSearchValue] = useState('')
+  const defaultSearchKeyword = 'Eternal'
+  const [searchKeyword, setSearchKeyword] = useState(defaultSearchKeyword)
+  const [searchKeywordPrev, setSearchKeywordPrev] = useState(defaultSearchKeyword)
   const [searchResult, setSearchResult] = useState({})
+  const [searchInputMessage, setSearchInputMessage] = useState('')
+
   const handleChange = (event) => {
-    //console.log('handleChange: ' + event.target.value)
-    setSearch(event.target.value);
+    setSearchKeyword(event.target.value);
   }
   const handleSearch = async () => {
-    const dataAddress = "https://api.themoviedb.org/3/search/movie?api_key=24c64ea903d3b9426c0b72f5af3d2813&language=en-US&query=" + search + "&include_adult=false"
-    const result = await fetch(dataAddress)
-    const data = await result.json()
-    console.log(data)
-    setSearchResult(data)
-    console.log(searchResult)
-    setSearchValue(search)
-    setSearch('')
-    console.log('search state: ' + search)
+    if(searchKeyword.trim().length >= 3){
+      setSearchInputMessage('')
+      const dataAddress = `https://api.themoviedb.org/3/search/movie?api_key=24c64ea903d3b9426c0b72f5af3d2813&language=en-US&query=${searchKeyword}&include_adult=false`
+      const result = await fetch(dataAddress)
+      const data = await result.json()
+      setSearchResult(data)
+      setSearchKeywordPrev(searchKeyword)
+      setSearchKeyword('')
+    } else {
+      setSearchInputMessage(<div className='error'>Please lengthen your search input to 3 characters or more</div>)
+    } 
   }
+
+  useEffect(() => {
+    handleSearch()
+  }, [])
+
   const handleKeyDown = (event) => {
     if (event.key === "Enter"){
       handleSearch()
     }
   }
 
-  let resultHeader = <div></div>
-  if(searchResult.results){
-    resultHeader = <h3>Your search results for: <b>{searchValue}</b></h3>
+  let resultsContainer = <></>
+  let resultsData_currentlyShowing = <></>
+  if(searchResult.total_results){
+    resultsContainer = <MoviesList data={searchResult} />
+    resultsData_currentlyShowing = <>Showing {Object.keys(searchResult.results).length}</>
   }
+  
   return (
     <div className="App">
       <h1>Filmide andmebaas</h1>
       <label>
-        <input value={search || ''} onChange={handleChange} onKeyDown={handleKeyDown} type="text" />
+        {/* event.key === "Enter" && handleSearch() */}
+        {/* is the same as */}
+        {/* event.key === "Enter" ? handleSearch() : null */}
+        {/* is the same as */}
+        {/* if(event.key === "Enter") {handleSearch()} else {null} */}
+        <input value={searchKeyword || ''} onChange={handleChange} onKeyDown={(event) => {event.key === "Enter" && handleSearch()}} type="text" /> 
       </label>
       <button onClick={handleSearch}>Otsi</button>
-      {resultHeader}
-      <MoviesList data={searchResult} />
+      {searchInputMessage}
+      <p>Your search results for: <b>{searchKeywordPrev}</b></p><p>{searchResult.total_results} movies found. {resultsData_currentlyShowing}</p>
+      {resultsContainer}
     </div>
   );
 }

@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/filmide-andmebaas/static/css/main.073c9b0a.css",
-    "main.js": "/filmide-andmebaas/static/js/main.bd328ed1.js",
+    "main.css": "/filmide-andmebaas/static/css/main.197bfd36.css",
+    "main.js": "/filmide-andmebaas/static/js/main.63378f5b.js",
     "index.html": "/filmide-andmebaas/index.html",
-    "main.073c9b0a.css.map": "/filmide-andmebaas/static/css/main.073c9b0a.css.map",
-    "main.bd328ed1.js.map": "/filmide-andmebaas/static/js/main.bd328ed1.js.map"
+    "main.197bfd36.css.map": "/filmide-andmebaas/static/css/main.197bfd36.css.map",
+    "main.63378f5b.js.map": "/filmide-andmebaas/static/js/main.63378f5b.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
-    "static/js/main.bd328ed1.js"
+    "static/css/main.197bfd36.css",
+    "static/js/main.63378f5b.js"
   ]
 }
