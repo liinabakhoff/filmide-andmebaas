@@ -10,7 +10,11 @@ function App() {
   const [searchInputMessage, setSearchInputMessage] = useState('')
 
   const handleChange = (event) => {
-    setSearchKeyword(event.target.value);
+    if (event.key === "Enter"){
+      handleSearch()
+    } else {
+      setSearchKeyword(event.target.value)
+    }
   }
   const handleSearch = async () => {
     if(searchKeyword.trim().length >= 3){
@@ -30,12 +34,6 @@ function App() {
     handleSearch()
   }, [])
 
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter"){
-      handleSearch()
-    }
-  }
-
   let resultsContainer = <></>
   let resultsData_currentlyShowing = <></>
   if(searchResult.total_results){
@@ -52,7 +50,7 @@ function App() {
         {/* event.key === "Enter" ? handleSearch() : null */}
         {/* is the same as */}
         {/* if(event.key === "Enter") {handleSearch()} else {null} */}
-        <input value={searchKeyword || ''} onChange={handleChange} onKeyDown={(event) => {event.key === "Enter" && handleSearch()}} type="text" /> 
+        <input value={searchKeyword || ''} onChange={handleChange} type="text" /> 
       </label>
       <button onClick={handleSearch}>Otsi</button>
       {searchInputMessage}
